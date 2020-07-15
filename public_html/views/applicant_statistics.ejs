@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_home %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    STATISTICS
+                                </div>
+                                <div class="card-body">
+                                    <%- lang.applicants.sentences.no_new_announcements %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <%- include ('applicant_right_side_nav.ejs') %>
+                </div>
+            </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer')%>
+    <script>
+        $('.nav-statistics').addClass("active")
+    </script>
+</body>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_language_proficiencies %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row" style="top: 200px; position: sticky">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row documentUploader">
+                        <div class="col-12">
+                            <div class="card" id="uploadDocumentsAccordion">
+                                <div class="card-header navlink" data-toggle="collapse" data-target="#uploadDocumentsSub" data-parent="uploadDocumentsAccordion">
+                                    <%- lang.applicants.words.language_proficiencies_add_new_language_proficiency %>
+                                </div>
+                                <div class="card-body collapse" id="uploadDocumentsSub">
+                                    <div id="showCard" class="d-none">
+                                        <div class="card border-danger">
+                                            <div class="card-body">
+                                                <b><%- lang.applicants.sentences.language_proficiencies_double_check %></b><br />
+                                                <span id="languageWarning"><span class="badge badge-pill badge-danger">&nbsp;</span>&nbsp;<%- lang.applicants.sentences.language_cannot_be_empty %><br /></span>
+                                                <span id="proficiencyWarning"><span class="badge badge-pill badge-danger">&nbsp;</span>&nbsp;<%- lang.applicants.sentences.proficiencies_level_cannot_be_empty %></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <form method="post" action="/applicant/language-proficiency-add" enctype="application/x-www-form-urlencoded" onsubmit="return addNewLanguageProficiency()">
+                                        <label for="language"><%- lang.applicants.words.language_proficiencies_language %>:</label>
+                                        <select id="language" class="form-control" name="language">
+                                            <% for (var language in lang.words.language_proficiencies.languages) { %>
+                                                <option value="<%- language %>"><%- lang.words.language_proficiencies.languages[language] %></option>
+                                            <% } %>
+                                        </select>
+                                        <br />
+                                        <label for="level"><%- lang.applicants.words.language_proficiencies_proficiency_level %>:</label>
+                                        <select id="level" class="form-control" name="level">
+                                            <% for (var level in lang.words.language_proficiencies.levels) { %>
+                                                <option value="<%- level %>"><%- lang.words.language_proficiencies.levels[level]%></option>
+                                            <% } %>
+                                        </select>
+                                        <br /><br />
+                                        <button class="btn btn-primary btn-md float-right" type="submit"><%- lang.applicants.words.language_proficiencies_add_new_language_proficiency_btn %></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header"><%- lang.applicants.words.language_proficiencies_language_proficiencies %></div>
+                                <ul class="list-group list-group-flush documents">
+                                    <% for (var language_proficiency in applicant_language_proficiencies) { %>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <% console.log(applicant_language_proficiencies[language_proficiency])  %>
+                                            <div class="col-12">
+                                                <b><%- lang.words.language_proficiencies.languages[applicant_language_proficiencies[language_proficiency].language] %></b><br />
+                                                <span><%- lang.words.language_proficiencies.levels[applicant_language_proficiencies[language_proficiency].level] %></span>
+                                            </div>
+                                            <div class="col-12 pt-1 mt-2" style="border-top: 1px solid whitesmoke;">
+                                                <span class="modify_btn"><i class="fa fa-pencil"></i> <%- lang.applicants.words.language_proficiencies_edit_btn %></span> |
+                                                <span class="modify_btn"><i class="fa fa-trash"></i> <%- lang.applicants.words.language_proficiencies_delete_btn %></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include ('applicant_right_side_nav.ejs') %>
+                </div>
+            </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer')%>
+    <script>
+        $('.nav-language-proficiencies').addClass("active")
+
+        function addNewLanguageProficiency() {
+            var submit = true
+            var language = $('#language').val()
+            var level = $('#level').val()
+            if (language === '') {
+                submit = false
+                $('#languageWarning').addClass('d-block').removeClass('d-none')
+            } else {
+                $('#languageWarning').removeClass('d-block').addClass('d-none')
+            }
+            if (level === '') {
+                submit = false
+                $('#levelWarning').addClass('d-block').removeClass('d-none')
+            } else {
+                $('#levelWarning').removeClass('d-block').addClass('d-none')
+            }
+            if (!submit) $('#showCard').addClass('d-block').removeClass('d-none')
+                else $('#showCard').removeClass('d-block').addClass('d-none')
+            return submit
+        }
+
+        $('.collapse').collapse('hide')
+    </script>
+    <style>
+        .list-group.documents > .list-group-item:hover {
+            background-color: deeppink;
+            color: white;
+            cursor: pointer;
+        }
+
+        .modify_btn:hover {
+            color: purple !important;
+        }
+    </style>
+</body>

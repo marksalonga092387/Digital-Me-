@@ -1,0 +1,30 @@
+<div class="col-lg-3 pt-4 d-lg-inline-block d-none">
+    <div class="card">
+        <img class="card-img-top" src="/img/user/applicant-banner.jpg" alt="Card image cap">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <img src="/img/user/default.png" style="height: 50px;"/><br /><br />
+                </div>
+                <div class="col-12">
+                    <span style="font-size: 1.1em"><%- auth_applicant.name %></span><br />
+                    <span class="navlink" style="font-size: 0.9em" onclick="location.href='/applicant/logout'"><%- lang.applicants.words.nav_logout %></span>
+                </div>
+            </div>
+            <br />
+            <h6 class="card-title"><%- lang.applicants.words.nav_navigation %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink nav-home1" onclick="location.href='/applicant'"><%- lang.applicants.words.nav_home %></span><br />
+                <span class="d-inline-block navlink nav-profile"><%- lang.applicants.words.nav_profile %></span><br />
+                <span class="d-inline-block navlink nav-skills" onclick="location.href='/applicant/skills'"><%- lang.applicants.words.nav_skills %></span><br />
+                <span class="d-inline-block navlink nav-documents" onclick="location.href='/applicant/documents'"><%- lang.applicants.words.nav_documents %></span><br />
+                <span class="d-inline-block navlink nav-experiences" onclick="location.href='/applicant/experiences'"><%- lang.applicants.words.nav_experiences %></span><br />
+                <span class="d-inline-block navlink nav-language-proficiencies" onclick="location.href='/applicant/language-proficiencies'"><%- lang.applicants.words.nav_language_proficiencies %></span><br />
+                <span class="d-inline-block navlink nav-certificates" onclick="location.href='/applicant/certificates'"><%- lang.applicants.words.nav_certificates %></span><br />
+                <span class="d-inline-block navlink nav-statistics" onclick="location.href='/applicant/statistics'"><%- lang.applicants.words.nav_statistics %></span><br />
+                <span class="d-inline-block navlink nav-help"><%- lang.applicants.words.nav_help %></span><br />
+            </p>
+        </div>
+    </div>
+</div>

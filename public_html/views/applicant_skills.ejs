@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_skills %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row" style="top: 200px; position: sticky">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row documentUploader">
+                        <div class="col-12">
+                            <div class="card" id="addNewSkillAccordion">
+                                <div class="card-header navlink" data-toggle="collapse" data-target="#addNewSkillSub" data-parent="addNewSkillAccordion">
+                                    <%- lang.applicants.words.skills_add_new_skill %>
+                                </div>
+                                <div class="card-body collapse" id="addNewSkillSub">
+                                    <div id="showCard" class="d-none">
+                                        <div class="card border-danger">
+                                            <div class="card-body">
+                                                <b><%- lang.applicants.sentences.skills_double_check %></b><br />
+                                                <span id="doctypeWarning"><span class="badge badge-pill badge-danger">&nbsp;</span>&nbsp;<%- lang.applicants.words.skills_you_must_choose_a_skill %><br /></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <%
+                                        var skillsAdded = []
+                                        for (var addedSkill in applicant_skills) {
+                                            skillsAdded.push(applicant_skills[addedSkill].skill)
+                                        }
+                                    %>
+                                    <form method="post" action="/applicant/skill-add" enctype="application/x-www-form-urlencoded" onsubmit="return addNewSkill()">
+                                        <label for="skill"><%- lang.applicants.words.skills_skill %>:</label>
+                                        <select class="form-control" id="skill" name="skill">
+                                            <% for (var skill in lang.words.skills) {
+                                                if (!skillsAdded.includes(skill)) {
+                                            %>
+                                                <option value="<%- skill %>"><%- lang.words.skills[skill] %></option>
+                                            <%  }
+                                               }
+                                            %>
+                                        </select>
+                                        <br />
+                                        <button class="btn btn-primary btn-md float-right" type="submit"><%- lang.applicants.words.skills_add_new_skill_btn %></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header"><%- lang.applicants.words.skills_skill %></div>
+                                <ul class="list-group list-group-flush documents">
+                                    <% for (var skill in applicant_skills) { %>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <span><%- lang.words.skills[applicant_skills[skill].skill] %></span><br />
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="delete_btn float-right">
+                                                    <i class="fa fa-trash"></i> <%- lang.applicants.words.skills_delete_skill_btn %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include ('applicant_right_side_nav.ejs') %>
+                </div>
+            </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer')%>
+    <script>
+        $('.nav-skills').addClass("active")
+
+        function addNewSkill() {
+            var submit = true
+            var skill = $('#skill').val()
+            if (skill === '') {
+                submit = false
+                $('#showCard').addClass('d-block').removeClass('d-none')
+            } else {
+                $('#showCard').removeClass('d-block').addClass('d-none')
+            }
+            return submit
+        }
+
+        $('.collapse').collapse('hide')
+    </script>
+    <style>
+        .list-group.documents > .list-group-item:hover {
+            background-color: deeppink;
+            color: white;
+            cursor: pointer;
+        }
+
+        .delete_btn:hover {
+            color: purple !important;
+        }
+    </style>
+</body>

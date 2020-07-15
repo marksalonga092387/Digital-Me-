@@ -1,0 +1,39 @@
+<div class="col-lg-3 pt-4">
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title"><%- lang.applicants.words.nav_digitalmelinks %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink nav-home2" onclick="location.href='/applicant'"><%- lang.applicants.words.nav_home %></span><br />
+                <span class="d-inline-block navlink nav-announcements"><%- lang.applicants.words.nav_announcements %></span><br />
+                <span class="d-inline-block navlink nav-privacypolicy"><%- lang.applicants.words.nav_privacy_policy %></span><br />
+                <span class="d-inline-block navlink nav-terms"><%- lang.applicants.words.nav_terms_and_agreements %></span><br />
+                <span class="d-inline-block navlink nav-abtDigitalMe"><%- lang.applicants.words.nav_about_digitalme %></span><br />
+                <span class="d-inline-block navlink nav-abtProgmrs"><%- lang.applicants.words.nav_about_the_programmers %></span><br />
+            </p>
+            <br />
+            <h6 class="card-title navlink nav-settings"  onclick="location.href='/applicant/settings'"><%- lang.applicants.words.nav_settings %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink" onclick="location.href='/applicant/settings#posting-filters'"><%- lang.applicants.words.nav_posting_filters %></span><br />
+                <span class="d-inline-block navlink" onclick="location.href='/applicant/settings#language-settings'"><%- lang.applicants.words.nav_language_settings %></span><br />
+                <span class="d-inline-block navlink" onclick="location.href='/applicant/settings#account-settings'"><%- lang.applicants.words.nav_account_settings %></span><br />
+            </p>
+        </div>
+    </div>
+    <%
+        var adCount = 0
+        for (var adc in lang.ads) adCount+=1
+        if (adc != 0) {
+        var ad = lang.ads[Math.floor(Math.random() * adc)]
+    %>
+    <div class="card mt-4">
+        <img class="card-img-top" src="/img/ads/<%- ad.img %>" alt="Ad">
+        <div class="card-body">
+            <p class="card-description" style="overflow-x: hidden">
+                <span style="font-size: 0.75em"><%- lang.applicants.words.nav_sponsored %></span><br />
+                <span style="font-weight: 600; line-height: 1; white-space: nowrap; font-size: 1.05em"><%- ad.title %></span><br />
+                <span style="font-size: 1em"><%- ad.description %></span>
+            </p>
+        </div>
+    </div>
+    <% } %>
+</div>

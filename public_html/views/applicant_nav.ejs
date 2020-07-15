@@ -1,0 +1,52 @@
+<div class="container-fluid applicant-navbar-bg sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/applicant">
+                <img src="/img/logo/<%- lang.img.logo %>" style="height: 28px"/>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto d-inline-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-home1" href="/applicant"><%- lang.applicants.words.nav_home %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-profile" href="#"><%- lang.applicants.words.nav_profile %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-skills" href="#" onclick="location.href='/applicant/skills'"><%- lang.applicants.words.nav_skills %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-documents" href="#" onclick="location.href='/applicant/documents'"><%- lang.applicants.words.nav_documents %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-experiences" href="#" onclick="location.href='/applicant/experiences'"><%- lang.applicants.words.nav_experiences %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-language-proficiencies" href="#" onclick="location.href='/applicant/language_proficiencies'"><%- lang.applicants.words.nav_language_proficiencies %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-certificates" href="#" onclick="location.href='/applicant/certificates'"><%- lang.applicants.words.nav_certificates %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-statistics" href="#" onclick="location.href='/applicant/statistics'"><%- lang.applicants.words.nav_statistics %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link navlink nav-logout" href="/applicant/logout"><%- lang.applicants.words.nav_logout %></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav mr-3 d-none d-lg-inline-block">
+                <img src="/img/user/default.png" style="height: 25px" class="d-inline-block"/>
+                <span class="d-inline-block">&nbsp;<%- auth_applicant.name %></span>
+            </div>
+            <div class="nav d-none d-lg-inline-block navlink" onclick="location.href='/applicant/logout'">
+                <i class="fa fa-sign-out pt-1"></i>
+                <span>&nbsp;<%- lang.applicants.words.nav_logout %></span>
+            </div>
+        </nav>
+    </div>
+</div>

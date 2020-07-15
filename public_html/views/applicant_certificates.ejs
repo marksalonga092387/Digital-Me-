@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_documents %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row" style="top: 200px; position: sticky">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row documentUploader">
+                        <div class="col-12">
+                            <div class="card" id="uploadCertificateAccordion">
+                                <div class="card-header navlink" data-toggle="collapse" data-target="#uploadCertificateSub" data-parent="uploadCertificateAccordion">
+                                    <%- lang.applicants.words.certificate_upload_certificates %>
+                                </div>
+                                <div class="card-body collapse" id="uploadCertificateSub">
+                                    <div id="showCard" class="d-none">
+                                        <div class="card border-danger">
+                                            <div class="card-body">
+                                                <b>DOUBLE CHECK</b><br />
+                                                <span id="certnameWarning"><span class="badge badge-pill badge-danger">&nbsp;</span>&nbsp;Certificate Name cannot be empty<br /></span>
+                                                <span id="docfileWarning"><span class="badge badge-pill badge-danger">&nbsp;</span>&nbsp;Document File cannot be empty.</span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <form method="post" action="/applicant/certificate-upload" enctype="multipart/form-data" onsubmit="return submitCertificate()">
+                                        <label for="certname"><%- lang.applicants.words.certificate_certificate_name %>:</label>
+                                        <input id="certname" class="form-control" name="certname" value="<%- lang.applicants.words.certificate_certificate_name %>"/>
+                                        <br />
+                                        <label for="docfile"><%- lang.applicants.words.certificate_document_file %>:</label>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="docfile" name="file" accept="image/jpeg, application/pdf">
+                                            <label class="custom-file-label" for="docfile"><%- lang.applicants.words.choose_file %></label>
+                                        </div>
+                                        <br /><br />
+                                        <button class="btn btn-primary btn-md float-right" type="submit"><%- lang.applicants.words.upload_btn %></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header"><%- lang.applicants.words.nav_certificates %></div>
+                                <ul class="list-group list-group-flush documents">
+                                    <% for (var certificate in applicant_certificates) { %>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-12" onclick="window.open('/apx_certs/<%- applicant_certificates[certificate].filename %>', '_blank')">
+                                                <b><%- applicant_certificates[certificate].certname %></b><br />
+                                                <span><i class="fa fa-file"></i>&nbsp;<%- languageProcessor.renderSentence(lang.applicants.sentences.filename_preview_with_time, {filename: applicant_certificates[certificate].filename, relative_time: moment(applicant_certificates[certificate].filename.split('-')[1], "x").fromNow()}) %></span>
+                                            </div>
+                                            <div class="col-12 delete pt-1 mt-2" style="border-top: 1px solid whitesmoke;">
+                                                <i class="fa fa-trash"></i> <%- lang.applicants.words.certificate_delete %>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%- include ('applicant_right_side_nav.ejs') %>
+                </div>
+            </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer')%>
+    <script>
+        $('.nav-certificates').addClass("active")
+
+        $('.custom-file-input').on('change', function() {
+            var filename = $(this).val().split('\\').pop()
+            $(this).siblings('.custom-file-label')
+                .addClass('selected')
+                .html(filename)
+        })
+
+        function submitCertificate() {
+            var submit = true
+            var certname = $('#certname').val()
+            var docfile = $('#docfile').val()
+            if (docfile === '') {
+                submit = false
+                $('#docfileWarning').addClass('d-block').removeClass('d-none')
+            } else {
+                $('#docfileWarning').removeClass('d-block').addClass('d-none')
+            }
+            if (certname === '') {
+                submit = false
+                $('#certnameWarning').addClass('d-block').removeClass('d-none')
+            } else {
+                $('#certnameWarning').removeClass('d-block').addClass('d-none')
+            }
+            if (!submit) $('#showCard').addClass('d-block').removeClass('d-none')
+                else $('#showCard').removeClass('d-block').addClass('d-none')
+            return submit
+        }
+
+        $('.collapse').collapse('hide')
+    </script>
+    <style>
+        .list-group.documents > .list-group-item:hover {
+            background-color: deeppink;
+            color: white;
+            cursor: pointer;
+        }
+
+        .delete:hover {
+            color: purple !important;
+        }
+    </style>
+</body>

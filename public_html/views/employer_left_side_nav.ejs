@@ -1,0 +1,48 @@
+<div class="col-lg-3 pt-4 d-lg-inline-block d-none">
+    <div class="card">
+        <img class="card-img-top" src="/img/user/employer-banner.jpg" alt="Card image cap">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <img src="/img/user/default.png" style="height: 50px;"/><br /><br />
+                </div>
+                <div class="col-12">
+                    <span style="font-size: 1.1em">Name</span><br />
+                    <span class="navlink" style="font-size: 0.9em"><%- lang.applicants.words.nav_logout %></span>
+                </div>
+            </div>
+            <br />
+            <h6 class="card-title"><%- lang.applicants.words.nav_navigation %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink nav-home1"><%- lang.employers.words.nav_home %></span><br />
+                <span class="d-inline-block navlink nav-profile"><%- lang.employers.words.nav_profile %></span><br />
+                <span class="d-inline-block navlink nav-documents"><%- lang.employers.words.nav_documents %></span><br />
+                <span class="d-inline-block navlink nav-postings"><%- lang.employers.words.nav_postings %></span><br />
+                <span class="d-inline-block navlink nav-statistics"><%- lang.employers.words.nav_statistics %></span><br />
+                <span class="d-inline-block navlink nav-help"><%- lang.employers.words.nav_help %></span><br />
+            </p>
+            <br />
+            <h6 class="card-title navlink"><%- lang.employers.words.nav_settings %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink"><%- lang.employers.words.nav_suggestion_filters %></span><br />
+                <span class="d-inline-block navlink"><%- lang.employers.words.nav_language_settings %></span><br />
+                <span class="d-inline-block navlink"><%- lang.employers.words.nav_account_settings %></span><br />
+            </p>
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h6 class="card-title"><%- lang.employers.words.nav_digitalmelinks %></h6>
+            <p class="card-description">
+                <span class="d-inline-block navlink nav-home2" onclick="location.href='/applicant'"><%- lang.employers.words.nav_home %></span><br />
+                <span class="d-inline-block navlink nav-announcements"><%- lang.employers.words.nav_announcements %></span><br />
+                <span class="d-inline-block navlink nav-privacypolicy"><%- lang.employers.words.nav_privacy_policy %></span><br />
+                <span class="d-inline-block navlink nav-terms"><%- lang.employers.words.nav_terms_and_agreements %></span><br />
+                <span class="d-inline-block navlink nav-abtDigitalMe"><%- lang.employers.words.nav_about_digitalme %></span><br />
+                <span class="d-inline-block navlink nav-abtProgmrs"><%- lang.employers.words.nav_about_the_programmers %></span>
+            </p>
+        </div>
+    </div>
+    <%- include ('employer_ad_placement') %>
+</div>

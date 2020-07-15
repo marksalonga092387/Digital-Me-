@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_experiences %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row" style="top: 200px; position: sticky">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" id="addNewExperienceAccordion">
+                                <div class="card-header navlink" data-toggle="collapse" data-target="#addNewExperienceSub" data-parent="addNewExperienceAccordion">
+                                    <%- lang.applicants.words.experiences_add_new_experience %>
+                                </div>
+                                <div class="card-body collapse" id="addNewExperienceSub">
+                                    <form method="post" action="/applicant/experience-add" enctype="application/x-www-form-urlencoded" onsubmit="return addNewExperience()">
+                                        <div id="showCard" class="d-none">
+                                            <div class="card border-danger">
+                                                <div class="card-body">
+                                                    <b><%- lang.applicants.sentences.experiences_double_check %></b><br />
+                                                    <span id="companyNameWarning"><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_company_name_cant_be_empty %><br /></span>
+                                                    <span id="positionWarning"><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_position_is_empty %><br /></span>
+                                                    <span id="startDateWarning"><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_start_date_is_invalid %><br /></span>
+                                                    <span id="endDateWarning"><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_end_date_is_invalid %><br /></span>
+                                                    <span id="countryWarning" ><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_country_is_empty %><br /></span>
+                                                    <span id="monthlySalaryWarning"><span class="badge badge-pill badge-danger">&nbsp;</span> <%- lang.applicants.sentences.experiences_monthly_salary_is_empty %></span>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label for="companyname"><%- lang.applicants.words.experiences_company_name %>:</label>
+                                                <input type="text" class="form-control" id="companyName" name="company_name" placeholder="<%- lang.applicants.words.experiences_company_name %>"/>
+                                                <br />
+                                                <label for="position"><%- lang.applicants.words.experiences_position %>:</label>
+                                                <input type="text" class="form-control" id="positionFront" list="positions" placeholder="<%- lang.applicants.words.experiences_position %>"/>
+                                                <datalist id="positions">
+                                                    <% for (var position in lang.words.positions) { %>
+                                                        <option data-value="<%- position %>"><%- lang.words.positions[position] %></option>
+                                                    <% } %>
+                                                </datalist>
+                                                <input type="hidden" id="position" name="position"/>
+                                                <br />
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label for="doctype"><%- lang.applicants.words.experiences_start_date %>:</label>
+                                                <input type="date" class="form-control" id="startDate" name="start_date" placeholder="<%- lang.applicants.words.experiences_start_date %>"/>
+                                                <br />
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <label for="doctype"><%- lang.applicants.words.experiences_end_date %>:</label>
+                                                <input type="date" class="form-control" id="endDate" name="end_date" placeholder="<%- lang.applicants.words.experiences_end_date %>"/>
+                                                <br />
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="country"><%- lang.applicants.words.experiences_country %>:</label>
+                                                <input type="text" class="form-control" id="countryFront" list="countries" placeholder="<%- lang.applicants.words.experiences_country %>"/>
+                                                <datalist id="countries">
+                                                    <% for (var country in lang.words.countries) { %>
+                                                        <option data-value="<%- country %>"><%- lang.words.countries[country] %></option>
+                                                    <% } %>
+                                                </datalist>
+                                                <input type="hidden" id="country" name="country" />
+                                                <br />
+                                                <label for="monthlySalary"><%- lang.applicants.words.experiences_monthly_salary %>:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">PHP</span>
+                                                    </div>
+                                                    <input type="number" class="form-control" id="monthlySalary" name="monthly_salary" step="0.01" min="0.00" placeholder="<%- lang.applicants.words.experiences_monthly_salary %>"/>
+                                                </div>
+                                                <br />
+                                                <label for="description"><%- lang.applicants.words.experiences_description %>:</label>
+                                                <textarea class="form-control" id="description" placeholder="<%- lang.applicants.words.experiences_description %>" name="description"></textarea>
+                                                <br /><br />
+                                                <button class="btn btn-danger btn-md float-right mb-1" type="reset"><%- lang.applicants.words.experiences_reset_btn %></button>
+                                                <span class="float-right">&nbsp;</span>
+                                                <button class="btn btn-primary btn-md float-right mb-1" type="submit"><%- lang.applicants.words.experiences_add_new_experience_btn %></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                            <div class="card-header"><%- lang.applicants.words.nav_experiences %></div>
+                            <ul class="list-group list-group-flush documents">
+                                <% for (var experience in applicant_experiences) { %>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b><%- applicant_experiences[experience].companyName %></b><br />
+                                            <span><%- lang.words.positions[applicant_experiences[experience].position] %></span><br />
+                                            <span>PHP <%- applicant_experiences[experience].monthlySalary %></span><br />
+                                            <span><%- moment(applicant_experiences[experience].startDate, "x").format("LL") %> - <%- moment(applicant_experiences[experience].endDate, "x").format("LL") %></span><br />
+                                            <% if (applicant_experiences[experience].description != "") { %>
+                                            <span><%- applicant_experiences[experience].description %></span><br />
+                                            <% } %>
+                                        </div>
+                                        <div class="col-12 pt-1 mt-2" style="border-top: 1px solid whitesmoke;">
+                                            <span class="exp_btn"><i class="fa fa-pencil"></i> <%- lang.applicants.words.experiences_edit_experience %></span> | <span class="exp_btn"><i class="fa fa-trash"></i> <%- lang.applicants.words.experiences_delete_experience %></span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+                <%- include ('applicant_right_side_nav.ejs') %>
+                </div>
+            </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer')%>
+    <script>
+        $('.nav-experiences').addClass("active")
+
+        $('#positionFront').on('change', function() {
+            $('#positions').find('option').each(function() {
+                if (escapeHtml($('#positionFront').val()) === $(this).html()) {
+                    $('#position').val($(this).attr('data-value'))
+                }
+                if ($('#positionFront').val()==="") {
+                    $('#country').val("")
+                }
+            })
+        })
+
+        $('#countryFront').on('change', function() {
+            $('#countries').find('option').each(function() {
+                if (escapeHtml($('#countryFront').val()) === $(this).html()) {
+                    $('#country').val($(this).attr('data-value'))
+                }
+                if ($('#countryFront').val()==="") {
+                    $('#country').val("")
+                }
+            })
+        })
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        function addNewExperience() {
+            var submit = true
+            var company_name = $('#companyName').val()
+            var position = $('#position').val()
+            var start_date = $('#startDate').val()
+            var end_date = $('#endDate').val()
+            var country = $('#country').val()
+            var monthly_salary = $('#monthlySalary').val()
+            if (company_name === "") {
+                submit = false
+                $('#companyNameWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#companyNameWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (position === "") {
+                submit = false
+                $('#positionWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#positionWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (country === "") {
+                submit = false
+                $('#countryWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#countryWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (Number.parseFloat(monthly_salary) == "NaN" || monthly_salary === "") {
+                submit = false
+                $('#monthlySalaryWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#monthlySalaryWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (Date.parse(start_date) == "NaN" || start_date === "") {
+                submit = false
+                $('#startDateWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#startDateWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (Date.parse(end_date) == "NaN" || end_date === "") {
+                submit = false
+                $('#endDateWarning')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#endDateWarning')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            if (!submit) {
+                $('#showCard')
+                    .addClass('d-block')
+                    .removeClass('d-none')
+            } else {
+                $('#showCard')
+                    .addClass('d-none')
+                    .removeClass('d-block')
+            }
+            return submit
+        }
+
+        $('.collapse').collapse('hide')
+    </script>
+    <style>
+        .list-group.documents > .list-group-item:hover {
+            background-color: deeppink;
+            color: white;
+            cursor: pointer;
+        }
+
+        .exp_btn:hover {
+            color: purple !important
+        }
+    </style>
+</body>

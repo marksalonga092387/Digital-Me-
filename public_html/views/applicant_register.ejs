@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_register %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-8 offset-lg-2 mt-5 pb-5">
+                    <div class="card" style="box-shadow: 0 0 10px rebeccapurple">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <img src="/img/logo/<%- lang.img.logo %>" class="w-50"/>
+                                    </div>
+                                </div>
+                                <form id="registerModule" onsubmit="return false">
+                                    <div v-if="validation_preview == true">
+                                        <br />
+                                        <div class="card border-danger">
+                                            <div class="card-body">
+                                                <div class="card-description">
+                                                    <b><%- lang.applicants.sentences.register_double_check %></b>
+                                                    <span v-if="validation_wallet == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_wallet_empty %></span>
+                                                    <span v-if="validation_email == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_email_empty %></span>
+                                                    <span v-if="validation_email == 'invalid'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_email_invalid %></span>
+                                                    <span v-if="validation_duplicate == true"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_duplicate %></span>
+                                                    <span v-if="validation_physical_address == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_physical_address_empty %></span>
+                                                    <span v-if="validation_password == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_password_empty %></span>
+                                                    <span v-if="validation_password == 'insufficient'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_password_insufficient %>.</span>
+                                                    <span v-if="validation_contact_number == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_contact_number_empty %></span>
+                                                    <span v-if="validation_name == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_name_empty %></span>
+                                                    <span v-if="validation_confirm_password == 'not match'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_confirm_password_not_match %></span>
+                                                    <span v-if="validation_location == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_location_empty %></span>
+                                                    <span v-if="validation_nationality == 'empty'"><br /><span class="badge badge-danger badge-pill">&nbsp;</span> <%- lang.applicants.sentences.register_double_check_nationality_empty %></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="status != ''">
+                                        <br />
+                                        <div class="card" :class="status_cardclass">
+                                            <div class="card-body">
+                                                <div class="card-description">
+                                                    <div v-if="status == 'ok'">
+                                                        <b><%- lang.applicants.sentences.register_success_title %></b><br />
+                                                        <%- lang.applicants.sentences.register_success_desc %>
+                                                    </div>
+                                                    <div v-if="status == 'not ok'">
+                                                        <b><%- lang.applicants.sentences.register_failed_title %></b><br />
+                                                        <%- lang.applicants.sentences.register_failed_desc %>
+                                                    </div>
+                                                    <div v-if="status == 'duplicate'">
+                                                        <b><%- lang.applicants.sentences.register_duplicate_title %></b><br />
+                                                        <%- lang.applicants.sentences.register_duplicate_desc %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <br />
+                                            <label><%- lang.applicants.words.register_wallet_address %></label>
+                                            <input type="text" class="form-control" placeholder="<%- lang.applicants.words.register_wallet_address %>" v-model="wallet_address"/>
+                                            <br />
+                                            <label><%- lang.applicants.words.register_email_address %></label>
+                                            <input type="text" class="form-control" placeholder="<%- lang.applicants.words.register_email_address %>" v-model="email_address"/>
+                                            <br />
+                                            <label><%- lang.applicants.words.register_password %></label>
+                                            <input type="password" class="form-control" placeholder="<%- lang.applicants.words.register_password %>" v-model="password"/>
+                                            <br />
+                                            <label><%- lang.applicants.words.register_confirm_password %></label>
+                                            <input type="password" class="form-control" placeholder="<%- lang.applicants.words.register_confirm_password %>" v-model="confirm_password"/>
+                                            <br />
+                                            <label><%- lang.applicants.words.register_contact_number %></label>
+                                            <input type="text" class="form-control" placeholder="<%- lang.applicants.words.register_contact_number %>" v-model="contact_number"/>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                        <br />
+                                        <label><%- lang.applicants.words.register_name %></label>
+                                        <input type="text" class="form-control" placeholder="<%- lang.applicants.words.register_name %>" v-model="name"/>
+                                        <br />
+                                        <label><%- lang.applicants.words.register_physical_address %></label>
+                                        <textarea type="text" class="form-control" placeholder="<%- lang.applicants.words.register_physical_address %>" v-model="physical_address"></textarea>
+                                        <br />
+                                        <label><%- lang.applicants.words.register_location %></label>
+                                        <select class="form-control" v-model="location">
+                                            <% for (var location in lang.words.locations) { %>
+                                                <option value="<%- location %>"><%- lang.words.locations[location] %></option>
+                                            <% } %>
+                                        </select>
+                                        <br />
+                                        <label><%- lang.applicants.words.register_nationality %></label>
+                                        <select class="form-control" v-model="nationality">
+                                            <% for (var nationality in lang.words.nationalities) { %>
+                                                <option value="<%- nationality %>"><%- lang.words.nationalities[nationality] %></option>
+                                            <% } %>
+                                        </select>
+                                        <br />
+                                        </div>
+                                    </div>
+                                <div class="float-right">
+                                    <button class="btn btn-primary" type="submit" @click="register()"><%- lang.applicants.words.register_registerbtn %></button>
+                                    <button class="btn btn-danger" type="reset"><%- lang.applicants.words.register_resetbtn %></button>
+                                </div>
+                                </form>
+                                <br /><br /><br />
+                                <form method="post" action="/applicant/settings/changeLanguage">
+                                    <select class="form-control" name="lang" id="changeLanguage">
+                                        <% for (var language in lang.languages) { %>
+                                        <option value="<%- language %>" <% if (language == lang.codes.long_code) { %>selected="selected"<% } %>><%- lang.languages[language] %></option>
+                                        <% } %>
+                                    </select>
+                                </form>
+                                <br />
+                                <%- lang.applicants.sentences.register_no_account_login_here %><br />
+                                <%- lang.applicants.sentences.login_register_are_you_an_employer_go_here %><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#changeLanguage').on('change',function () {
+            $(this).closest("form").submit()
+        })
+
+        var registerModule = new Vue({
+            el: "#registerModule",
+            data: {
+                wallet_address: "",
+                email_address: "",
+                password: "",
+                confirm_password: "",
+                contact_number: "",
+                name: "",
+                physical_address: "",
+                location: "",
+                nationality: "",
+                validation: true,
+                validation_name: "untouched",
+                validation_wallet: "untouched",
+                validation_email: "untouched",
+                validation_duplicate: false,
+                validation_password: "untouched",
+                validation_confirm_password: "untouched",
+                validation_contact_number: "untouched",
+                validation_physical_address: "untouched",
+                validation_location: "untouched",
+                validation_nationality: "untouched",
+                validation_preview: false,
+                status: "",
+                status_cardclass: ""
+            },
+            watch: {
+                wallet_address: (wallet) => {
+                    if (wallet.length === 0) {
+                        registerModule.validation_wallet = "empty"
+                    } else {
+                        registerModule.validation_wallet = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                email_address: (email) => {
+                    if (email.length === 0) {
+                        registerModule.validation_email = "empty"
+                    } else if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
+                        registerModule.validation_email = "fine"
+                    } else {
+                        registerModule.validation_email = "invalid"
+                    }
+                    registerModule.check_duplicates(registerModule.email_address, registerModule.wallet_address)
+                    registerModule.preview_validate();
+                },
+                password: (pwd) => {
+                    if (pwd.length === 0) {
+                        registerModule.validation_password = "empty"
+                    } else if (pwd.length < 8) {
+                        registerModule.validation_password = "insufficient"
+                    } else {
+                        registerModule.validation_password = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                confirm_password: (cfm_pwd) => {
+                    if (cfm_pwd.length === 0) {
+                        registerModule.validation_confirm_password = "empty"
+                    } else if (cfm_pwd !== registerModule.password) {
+                        registerModule.validation_confirm_password = "not match"
+                    } else {
+                        registerModule.validation_confirm_password = "match"
+                    }
+                    registerModule.preview_validate();
+                },
+                contact_number: (cn) => {
+                    if (cn.length === 0) {
+                        registerModule.validation_contact_number = "empty"
+                    } else {
+                        registerModule.validation_contact_number = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                name: (nm) => {
+                    if (nm.length === 0) {
+                        registerModule.validation_name = "empty"
+                    } else {
+                        registerModule.validation_name = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                physical_address: (phys_adr) => {
+                    if (phys_adr.length === 0) {
+                        registerModule.validation_physical_address = "empty"
+                    } else {
+                        registerModule.validation_physical_address = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                location: (lcn) => {
+                    if (lcn.length === 0) {
+                        registerModule.validation_location = "empty"
+                    } else {
+                        registerModule.validation_location = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                nationality: (ntlty) => {
+                    if (ntlty.length === 0) {
+                        registerModule.validation_nationality = "empty"
+                    } else {
+                        registerModule.validation_nationality = "fine"
+                    }
+                    registerModule.preview_validate();
+                },
+                status: (value) => {
+                    switch (value) {
+                        case "ok":
+                            registerModule.status_cardclass = "bg-success border-success text-white"
+                            break
+
+                        case "not ok":
+                        case "duplicate":
+                            registerModule.status_cardclass = "bg-danger border-danger text-white"
+                            break
+
+                        default:
+                            registerModule.status_cardclass = "bg-white text-black"
+                            break
+                    }
+        }
+            },
+            methods: {
+                check_duplicates: (email, wallet) => {
+                    axios.post("/ajx/check-applicant-duplicates", {emailAddress: email, walletAddress: wallet})
+                        .then(
+                            res => {
+                                registerModule.validation_duplicate = res.data.duplicates === 1;
+                            }
+                        )
+                },
+                register: () => {
+                    registerModule.validate()
+                    if (registerModule.validation === false) {
+                        if (registerModule.validation_wallet === "untouched") registerModule.validation_wallet = "empty"
+                        if (registerModule.validation_email === "untouched") registerModule.validation_email = "empty"
+                        if (registerModule.validation_password === "untouched") registerModule.validation_password = "empty"
+                        if (registerModule.validation_confirm_password === "untouched") registerModule.validation_confirm_password = "empty"
+                        if (registerModule.validation_contact_number === "untouched") registerModule.validation_contact_number = "empty"
+                        if (registerModule.validation_name === "untouched") registerModule.validation_name = "empty"
+                        if (registerModule.validation_physical_address === "untouched") registerModule.validation_physical_address = "empty"
+                        if (registerModule.validation_location === "untouched") registerModule.validation_location = "empty"
+                        if (registerModule.validation_nationality === "untouched") registerModule.validation_nationality = "empty"
+                        registerModule.preview_validate()
+                    } else {
+                        axios.post("/ajx/add-applicant", {
+                            walletAddress: registerModule.wallet_address,
+                            emailAddress: registerModule.email_address,
+                            password: registerModule.password,
+                            physicalAddress: registerModule.physical_address,
+                            name: registerModule.name,
+                            location: registerModule.location,
+                            nationality: registerModule.nationality,
+                            contact_number: registerModule.contact_number
+                        }).then((res)=>{
+                            registerModule.status = res.data.status
+                            if (res.data.status == "ok") {
+                                setTimeout(()=>{
+                                    location.href="/applicant/login";
+                                }, 3000)
+                            }
+                        })
+                    }
+                },
+                preview_validate: () => {
+                    var vpvw = false
+                    if (registerModule.validation_wallet === "empty") vpvw = true
+                    if (registerModule.validation_duplicate === true) vpvw = true
+                    if (registerModule.validation_email === "invalid" || registerModule.validation_email === "empty") vpvw = true
+                    if (registerModule.validation_password === "empty" || registerModule.validation_password === "insufficient") vpvw = true
+                    if (registerModule.validation_confirm_password === "empty" || registerModule.validation_confirm_password === "not match") vpvw = true
+                    if (registerModule.validation_contact_number === "empty") vpvw = true
+                    if (registerModule.validation_name === "empty") vpvw = true
+                    if (registerModule.validation_physical_address === "empty") vpvw = true
+                    if (registerModule.validation_location === "empty") vpvw = true
+                    if (registerModule.validation_nationality === "empty") vpvw = true
+                    registerModule.validation_preview = vpvw
+                },
+                validate: () => {
+                    var validating = true
+                    if (registerModule.validation_wallet === "empty" || registerModule.validation_wallet === "untouched") validating = false
+                    if (registerModule.validation_duplicate === true) validating = false
+                    if (registerModule.validation_email === "invalid" || registerModule.validation_email === "empty" || registerModule.validation_email === "untouched") validating = false
+                    if (registerModule.validation_password === "empty" || registerModule.validation_password === "insufficient" || registerModule.validation_password === "untouched") validating = false
+                    if (registerModule.validation_confirm_password === "empty" || registerModule.validation_confirm_password === "not match" || registerModule.validation_confirm_password === "untouched") validating = false
+                    if (registerModule.validation_contact_number === "empty" || registerModule.validation_contact_number === "untouched") validating = false
+                    if (registerModule.validation_name === "empty" || registerModule.validation_name === "untouched") validating = false
+                    if (registerModule.validation_physical_address === "empty" || registerModule.validation_wallet === "untouched") validating = false
+                    if (registerModule.validation_location === "empty" || registerModule.validation_location === "untouched") validating = false
+                    if (registerModule.validation_nationality === "empty" || registerModule.validation_wallet === "untouched") validating = false
+                    registerModule.validation = validating
+                }
+            }
+        })
+    </script>
+</body>

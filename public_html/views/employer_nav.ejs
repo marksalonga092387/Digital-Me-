@@ -1,0 +1,49 @@
+<div class="container-fluid employer-navbar-bg sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/employer">
+                <img src="/img/logo/<%- lang.img['logo-white'] %>" style="height: 28px"/>
+            </a>
+            <button class="navbar-toggler bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto d-inline-block d-lg-none">
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-home1" href="#"><%- lang.employers.words.nav_home %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-profile" href="#"><%- lang.employers.words.nav_profile %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-documents" href="#"><%- lang.employers.words.nav_documents %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-postings" href="#"><%- lang.employers.words.nav_postings %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-statistics" href="#"><%- lang.employers.words.nav_statistics %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-help" href="#"><%- lang.employers.words.nav_help %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-settings" href="#"><%- lang.employers.words.nav_settings %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link uniq_navlink nav-logout" href="#"><%- lang.employers.words.nav_logout %></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="nav mr-3 d-none d-lg-inline-block">
+                <img src="/img/user/default.png" style="height: 25px" class="d-inline-block"/>
+                <span class="d-inline-block">&nbsp;Name</span>
+            </div>
+            <div class="nav d-none d-lg-inline-block uniq_navlink">
+                <i class="fa fa-sign-out pt-1"></i>
+                <span>&nbsp;<%- lang.employers.words.nav_logout %></span>
+            </div>
+        </nav>
+    </div>
+</div>

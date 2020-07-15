@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_login %></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4 mt-5 pb-5">
+                    <div class="card" style="box-shadow: 0 0 10px rebeccapurple">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <img src="/img/logo/<%- lang.img.logo %>" class="w-50"/>
+                                <br />
+                                <form id="loginModule" onsubmit="return false">
+                                <div v-if="status != ''">
+                                <br />
+                                    <div class="card" :class="loginModule.cardcolor" id="loginMsg">
+                                        <div class="card-body" >
+                                            <div class="card-description">
+                                                <span v-if="status == 'not ok'">
+                                                    <b><%- lang.applicants.sentences.login_failed_title %></b><br />
+                                                    <%- lang.applicants.sentences.login_failed_desc %>
+                                                </span>
+                                                <span v-if="status == 'ok'">
+                                                    <b><%- lang.applicants.sentences.login_success_title %></b><br />
+                                                    <%- lang.applicants.sentences.login_success_desc %>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                    <label><%- lang.applicants.words.login_email %></label>
+                                    <input type="text" class="form-control" placeholder="<%- lang.applicants.words.login_email %>" v-model="email"/>
+                                    <br />
+                                    <label><%- lang.applicants.words.login_password %></label>
+                                    <input type="password" class="form-control" placeholder="<%- lang.applicants.words.login_password %>" v-model="password"/>
+                                    <br />
+                                    <div class="float-right">
+                                        <button class="btn btn-primary" type="submit" @click="login()"><%- lang.applicants.words.login_loginbtn %></button>
+                                        <button class="btn btn-danger" type="reset"><%- lang.applicants.words.login_resetbtn %></button>
+                                    </div>
+                                </form>
+                                <br /><br /><br />
+                                <form method="post" action="/applicant/settings/changeLanguage">
+                                    <select class="form-control" name="lang" id="changeLanguage">
+                                        <% for (var language in lang.languages) { %>
+                                        <option value="<%- language %>" <% if (language == lang.codes.long_code) { %>selected="selected"<% } %>><%- lang.languages[language] %></option>
+                                        <% } %>
+                                    </select>
+                                </form>
+                                <br />
+                                <%- lang.applicants.sentences.login_no_account_register_here %><br />
+                                <%- lang.applicants.sentences.login_register_are_you_an_employer_go_here %><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#changeLanguage').on('change',function () {
+            $(this).closest("form").submit()
+        })
+
+        var loginModule = new Vue({
+            el: "#loginModule",
+            data: {
+                email: "",
+                password: "",
+                status: "",
+                cardcolor: ""
+            },
+            watch: {
+                status: (value) => {
+                    switch (value) {
+                        case "not ok":
+                            loginModule.cardcolor = "bg-danger border-success text-white"
+                            break;
+
+                        case "ok":
+                            loginModule.cardcolor = "bg-success border-success text-white"
+                            break;
+
+                        default:
+                            loginModule.cardcolor = "bg-white text-black"
+                            break;
+                    }
+                }
+            },
+            methods: {
+                login: function() {
+                    let app = this;
+                    let xmlHttp = new XMLHttpRequest();
+                    xmlHttp.onreadystatechange = function() {
+                        if (this.status === 200 && this.readyState === 4) {
+                            if (JSON.parse(this.response).status==="ok") {
+                                app.status = "ok"
+                                setTimeout(()=>{location.reload()}, 1000)
+                            }
+                            else app.status = "not ok";
+                        }
+                    }
+                    xmlHttp.open("POST","/ajx/login-applicant", false)
+                    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+                    xmlHttp.send("emailAddress="+this.email+"&password="+this.password)
+                }
+            }
+        })
+    </script>
+</body>

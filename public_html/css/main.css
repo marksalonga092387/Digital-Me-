@@ -1,0 +1,77 @@
+* {
+    margin: 0;
+    scrollbar-width: thin
+}
+
+:root {
+    --primary: #1351ad !important;
+}
+
+.applicant-navbar-bg {
+    box-shadow: 0 0 2px gray;
+    background-color: rgba(250, 250, 250, 0.78) !important;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    color: black;
+}
+
+.employer-navbar-bg {
+    box-shadow: 0 0 2px gray;
+    background: linear-gradient(to right, rgba(255, 20, 147, 0.7), rgba(102, 51, 153, 0.71));
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    color: white;
+}
+
+.mainContainer {
+    background-color: #ededed;
+    min-height: 100vh
+}
+
+.card {
+    border-radius: 5px
+}
+
+.navlink:hover {
+    cursor: pointer;
+    color: mediumpurple;
+    text-decoration: none;
+}
+
+.navlink.active {
+    color: rebeccapurple;
+}
+
+.uniq_navlink {
+    color: #ffffff !important;
+}
+
+.uniq_navlink:hover {
+    cursor: pointer;
+    color: #ffaada !important;
+}
+
+.form-control:focus, .select2-selection:active {
+    border-color: deeppink;
+    box-shadow: 0 1px 1px rgba(255, 20, 147, 0.07) inset, 0 0 8px rgba(255, 20, 147, 0.6);
+    outline: 0 none;
+}
+
+::-webkit-scrollbar {
+    background-color: rgba(0,0,0,0);
+    width: 6px;
+    border: 1px solid black
+}
+
+::-webkit-scrollbar-button {
+    display: none
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ededed
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, deeppink, rebeccapurple);
+    border-radius: 100px 0 0 100px
+}

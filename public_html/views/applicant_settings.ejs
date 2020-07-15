@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="<%- lang.codes.short_code %>">
+<head>
+    <title><%- lang.applicants.words.site_name+" - "+lang.applicants.words.nav_settings%></title>
+    <%- include ('header.ejs') %>
+</head>
+<body>
+    <%- include ('applicant_nav.ejs') %>
+    <div class="container-fluid mainContainer">
+        <div class="container">
+            <div class="row" style="top: 200px; position: sticky">
+                <%- include ('applicant_left_side_nav.ejs') %>
+                <div class="col-lg-6 pt-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <%- lang.applicants.words.nav_posting_filters %>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title"></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <%- lang.applicants.words.nav_language_settings %>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <% for (var language in lang.languages) { %>
+                                        <div class="col-12 col-lg-6">
+                                            <h6 class="changeLanguage navlink" lang="<%- language %>"><%- lang.languages[language] %></h6>
+                                        </div>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <form method="post" id="changeLanguage" action="/applicant/settings/changeLanguage" enctype="application/x-www-form-urlencoded">
+                                    <input type="hidden" name="lang" value="" />
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-12 pt-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <%- lang.applicants.words.nav_account_settings %>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title"></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%- include ('applicant_right_side_nav.ejs') %>
+            </div>
+        </div>
+        <div class="pt-5 pb-5"></div>
+    </div>
+    <%- include ('applicant_footer.ejs') %>
+    <script>
+        $('.changeLanguage').click(function() {
+            $('#changeLanguage').find('input').val($(this).attr('lang'))
+            $('#changeLanguage').submit()
+        })
+
+        $('.nav-settings').addClass("active")
+    </script>
+</body>
